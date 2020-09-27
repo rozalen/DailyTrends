@@ -1,0 +1,44 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    environment:
+      POSTGRES_DB: db_dailytrends
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - ./db:/var/lib/postgresql
+    ports:
+      - 5432:5432
+    networks:
+      default:
+        aliases:
+          - postgres
+  api:
+    build:
+      ./api
+    volumes:
+      - ./api:/var/www
+      - /var/www/vendor
+    ports:
+      - 8000:8000
+    networks:
+      default:
+        aliases:
+          - api
+    depends_on:
+      - postgres
+
+  front:
+    build: 
+      ./front
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./front:/front
+      - /front/node_modules
+volumes:
+  api:
+  front:
+  db:
