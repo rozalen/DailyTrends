@@ -13,11 +13,12 @@ class CreateTableFeeds extends Migration
      */
     public function up()
     {
-        Schema::create('feeds', function (Blueprint $table) {
+        Schema::create('feeds', function (Blueprint $table) 
+        {
             $table->id();
-            $table->string("title");
-            $table->string("body");
-            $table->string("image");
+            $table->string("title")->unique();
+            $table->longText("body");
+            $table->string("image")->nullable();
             $table->string("source");
             $table->string("publisher");
             $table->timestamps();

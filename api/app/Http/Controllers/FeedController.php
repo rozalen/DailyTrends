@@ -48,7 +48,6 @@ class FeedController extends Controller
     public function store (Request $request)
     {
         $feed = new Feed;
-
         try
         {
             $feed->title = $request->input('title');
@@ -61,7 +60,7 @@ class FeedController extends Controller
         }
         catch (QueryException $e)
         {
-            $msgResponse = self::msgResponse(false, "", "Feed needs a title, body, image, source and publisher");
+            $msgResponse = self::msgResponse(false, "", "Feed needs a title, body, source and publisher");
         }
             
         return response($msgResponse);

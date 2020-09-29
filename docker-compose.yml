@@ -34,7 +34,7 @@ services:
     build: 
       ./front
     ports:
-      - "8080:8080"
+      - 8080:8080
     volumes:
       - ./front:/front
       - /front/node_modules
