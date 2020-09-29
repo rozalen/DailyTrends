@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Models\Feed;
 use \Illuminate\Database\QueryException ;
@@ -16,6 +17,22 @@ class FeedController extends Controller
     public function index ()
     {
         $feeds = Feed::all();
+        $msgResponse = self::msgResponse(!$feeds->isEmpty(), $feeds, "Feeds not found");
+        return response($msgResponse);
+    }
+
+     /**
+     * Returns a list of feeds published on the day
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function todayFeeds()
+    {
+        $scrapingController = new ScrapingController();
+        $scrapingController->getNews();
+
+        $feeds = Feed::whereDate('created_at', Carbon::today())->get();
+
         $msgResponse = self::msgResponse(!$feeds->isEmpty(), $feeds, "Feeds not found");
         return response($msgResponse);
     }

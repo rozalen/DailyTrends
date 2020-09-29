@@ -27,4 +27,7 @@ $router->post('/feed', 'FeedController@store');
 $router->put('/feed/{id}', 'FeedController@update');
 $router->delete('/feed/{id}', 'FeedController@destroy');
 
+$router->get('/feed/today', 'FeedController@todayFeeds');
+
+
 $router->get('/scraping', 'ScrapingController@getNews');
