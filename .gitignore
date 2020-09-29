@@ -8,3 +8,4 @@ api/vendor
 api/storage/*.key
 api/.env
 api/.phpunit.result.cache
+api/composer.lock
