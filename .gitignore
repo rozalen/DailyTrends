@@ -1,5 +1,8 @@
 # Frontend ignored files
 node_modules/
+front/.DS_Store
+front/package-lock.json
+front/src/.DS_Store
 
 # Api ignored files
 api/public/storage
