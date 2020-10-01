@@ -26,7 +26,7 @@
       </v-btn>
     </v-app-bar>
 
-    <v-main>
+    <v-main class="mb-15">
       <v-container fluid>
         <v-row class="fill-height">
           <v-col>
@@ -37,11 +37,23 @@
         </v-row>
       </v-container>
     </v-main>
+    <v-footer
+      absolute
+      color="primary"
+      dark
+      class="font-weight-medium"
+    >
+      <v-col
+        class="text-center"
+        cols="12"
+      >
+        {{ new Date().getFullYear() }} — <strong>DailyTrends</strong>
+      </v-col>
+    </v-footer>
   </v-app>
 </template>
 
 <script>
-
 export default {
   name: 'App',
 

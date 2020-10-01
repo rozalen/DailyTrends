@@ -18,6 +18,12 @@ $router->get('/', function () use ($router) {
 });
 
  /**
+ * Get Feeds added today
+ */
+
+$router->get('/feed/today', 'FeedController@todayFeeds');
+
+ /**
  * Feed CRUD controller routes
  */
 
@@ -26,8 +32,5 @@ $router->get('/feed/{id}', 'FeedController@show');
 $router->post('/feed', 'FeedController@store');
 $router->put('/feed/{id}', 'FeedController@update');
 $router->delete('/feed/{id}', 'FeedController@destroy');
-
-$router->get('/feed/today', 'FeedController@todayFeeds');
-
 
 $router->get('/scraping', 'ScrapingController@getNews');
