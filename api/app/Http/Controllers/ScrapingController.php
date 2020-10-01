@@ -74,7 +74,11 @@ class ScrapingController extends Controller
                 return $field->attr("src");
             });
             
-            $publisher = $crawler->filter($params['publisherSelector'])->first()->text();
+            $publisher = $crawler->filter($params['publisherSelector'])->each(function ($field) 
+            {
+                return $field->text();
+            });
+
             $source = $params['source'];
             
             $existsFeed = Feed::where('title', $title)->first();
@@ -84,7 +88,7 @@ class ScrapingController extends Controller
                 $feed->title = $title;
                 $feed->body = $body;
                 $feed->image = (empty($image)) ? '' : $image[0];
-                $feed->publisher = $publisher;
+                $feed->publisher = (empty($publisher)) ? $source : $publisher[0];
                 $feed->source = $source;
                 
                 if($feed->save())

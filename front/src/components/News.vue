@@ -15,7 +15,14 @@
           contain
           height="100"
         />
-        <newCard
+        <v-progress-circular
+          v-if="loadingElPais"
+          indeterminate
+          color="primary"
+        >
+        </v-progress-circular>
+        <NewCard
+          v-else
           v-for = "article in elPaisNews"
           :key = "article.id"
           :article = "article"
@@ -31,7 +38,14 @@
           contain
           height="100"
         />
-        <newCard
+         <v-progress-circular
+          v-if="loadingElMundo"
+          indeterminate
+          color="primary"
+        >
+        </v-progress-circular>
+        <NewCard
+          v-else
           v-for = "article in elMundoNews"
           :key = "article.id"
           :article = "article"
@@ -39,7 +53,9 @@
         />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row
+      class="text-center"
+    >
       <v-col
         xs="12"
       >
@@ -48,7 +64,14 @@
           contain
           height="100"
         />
-        <newCard
+        <v-progress-circular
+          v-if="loadingAvantio"
+          indeterminate
+          color="primary"
+        >
+        </v-progress-circular>
+        <NewCard
+          v-else
            v-for = "article in avantioNews"
           :key = "article.id"
           :article = "article"
@@ -60,7 +83,7 @@
 </template>
 
 <script>
-import newCard from './newCard.vue';
+import NewCard from './NewCard.vue';
 
 export default {
   name: 'News',
@@ -69,16 +92,22 @@ export default {
     elMundoNews: [],
     elPaisNews: [],
     avantioNews: [],
+    loadingElMundo: true,
+    loadingElPais: true,
+    loadingAvantio: true,
   }),
   components: {
-    newCard,
+    NewCard,
   },
   methods:
   {
     setNews() {
       this.elMundoNews = this.news.filter((article) => article.source === 'ElMundo');
+      this.loadingElMundo = false;
       this.elPaisNews = this.news.filter((article) => article.source === 'ElPais');
+      this.loadingElPais = false;
       this.avantioNews = this.news.filter((article) => article.source === 'Avantio');
+      this.loadingAvantio = false;
     },
   },
   watch: {

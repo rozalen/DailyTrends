@@ -13,6 +13,7 @@
           src="@/assets/logo.jpeg"
           transition="scale-transition"
           width="40"
+          @click="goHome"
         />
       </div>
 
@@ -78,6 +79,9 @@ export default {
     closeDialog($event) {
       this.dialog = false;
       this.$router.push({ name: 'Article', params: { id: $event.id } });
+    },
+    goHome() {
+      if (this.$route.name !== 'Home') this.$router.push({ name: 'Home' });
     },
   },
   watch: {
