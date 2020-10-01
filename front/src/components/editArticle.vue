@@ -53,58 +53,57 @@
 
 <script>
 import feedService from '@/services/api/article';
-import imageUpload from "./imageUpload";
-export default {
-    name: 'editArticle',
-    components: {
-        imageUpload
-    },
-    props: [
-        'article'
-    ],
-    data: () =>({
-        id: '',
-        body:'',
-        publisher:'',
-        selectSource:'',
-        image:'',
-        sourceList: [
-            'ElMundo',
-            'ElPais',
-            'Avantio',
-        ],
-    }),
-    methods: {
-        editArticle()
-        {
-            let params = {
-                body: this.body,
-                publisher: this.publisher,
-                source: this.selectSource,
-                image: this.image
-            }
+import imageUpload from './imageUpload.vue';
 
-            feedService.editArticle(this.id, params)
-            .then((res) => {
-                this.$emit('closeDialog')
-            })
-            .catch(() => {
-            });
-        },
-        getImage(val)
-        {
-            let image = val[0];
-            this.image = image.url;
-        }
+export default {
+  name: 'editArticle',
+  components: {
+    imageUpload,
+  },
+  props: [
+    'article',
+  ],
+  data: () => ({
+    id: '',
+    body: '',
+    publisher: '',
+    selectSource: '',
+    image: '',
+    sourceList: [
+      'ElMundo',
+      'ElPais',
+      'Avantio',
+    ],
+  }),
+  methods: {
+    editArticle() {
+      const params = {
+        body: this.body,
+        publisher: this.publisher,
+        source: this.selectSource,
+        image: this.image,
+      };
+
+      feedService.editArticle(this.id, params)
+        .then(() => {
+          this.$emit('closeDialog');
+        })
+        .catch(() => {
+        });
     },
-    mounted() {
-        let article = this.$props.article;
-        this.id = article.id;
-        this.body = article.body;
-        this.selectSource = article.source;
-        this.publisher = article.publisher;
-    }
-}
+    getImage(val) {
+      const image = val[0];
+      this.image = image.url;
+    },
+  },
+  mounted() {
+    const { article } = this.$props;
+    this.id = article.id;
+    this.body = article.body;
+    this.selectSource = article.source;
+    this.publisher = article.publisher;
+  },
+};
 </script>
 
 <style scoped>

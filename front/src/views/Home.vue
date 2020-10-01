@@ -21,8 +21,7 @@ export default {
   components: {
     News,
   },
-  mounted() 
-  {
+  mounted() {
     feedService.getArticles()
       .then((res) => {
         this.news = res.response;

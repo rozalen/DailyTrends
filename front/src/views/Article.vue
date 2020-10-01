@@ -62,13 +62,13 @@
         <v-row
             class="d-flex justify-center"
         >
-            <v-col 
+            <v-col
                 sm="2"
                 cols="6"
             >
                 <v-dialog v-model="dialog"  max-width="600px">
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn  
+                        <v-btn
                             block
                             dark
                             color="#e85c40"
@@ -79,13 +79,13 @@
                             Edit
                         </v-btn>
                     </template>
-                    <editArticle 
+                    <editArticle
                         :article = "article"
                         @closeDialog = "closeDialog"
                     ></editArticle>
                 </v-dialog>
             </v-col>
-            <v-col 
+            <v-col
                 sm="2"
                 cols="6"
             >
@@ -115,75 +115,71 @@
 
 <script>
 import feedService from '@/services/api/article';
-import editArticle from '../components/editArticle'
+import editArticle from '../components/editArticle.vue';
+
 export default {
-    name: 'Article',
-    components:{
-        editArticle
-    },
-    data() {
-        return {
-            dialog: false,
-            article: [],
-            sourceImage: ""
-        };
-    },
-    methods: 
+  name: 'Article',
+  components: {
+    editArticle,
+  },
+  data() {
+    return {
+      dialog: false,
+      article: [],
+      sourceImage: '',
+    };
+  },
+  methods:
     {
-        getArticle()
-        {
-            let id = this.$route.params.id;
-            feedService.getArticle(id)
-            .then((res) => {
-                this.article = res.response;
-                if(this.article)
-                {
-                    this.setImageSource();
-                    this.formatDate();
-                }
-                else
-                    this.$router.push('/');
-            })
-            .catch(() => {
-            });
-        },
-        removeArticle()
-        {
-            feedService.removeArticle(this.article.id)
-            .then((res) => {
-                this.$router.push('/');
-            })
-            .catch(() => {
-            });
-        },
-        setImageSource()
-        { 
-            switch(this.article.source)
-            {
-                case "ElMundo":
-                    this.sourceImage = require('../assets/elmundo.jpg');
-                break;
-                case "ElPais":
-                    this.sourceImage = require('../assets/pais.jpg');
-                break;
-                case "Avantio":
-                    this.sourceImage = require('../assets/avantio.jpg');
-                break;   
-            }
-        },
-        formatDate()
-        {   
-            let date = new Date(this.article.created_at);
-            this.article.created_at = date.toDateString();
-        },
-        closeDialog()
-        {
-            this.dialog = false;
-            this.getArticle();
+      getArticle() {
+        const { id } = this.$route.params;
+        feedService.getArticle(id)
+          .then((res) => {
+            this.article = res.response;
+            if (this.article) {
+              this.setImageSource();
+              this.formatDate();
+            } else this.$router.push('/');
+          })
+          .catch(() => {
+          });
+      },
+      removeArticle() {
+        feedService.removeArticle(this.article.id)
+          .then(() => {
+            this.$router.push('/');
+          })
+          .catch(() => {
+          });
+      },
+      setImageSource() {
+        switch (this.article.source) {
+          case 'ElMundo':
+            // eslint-disable-next-line global-require
+            this.sourceImage = require('../assets/elmundo.jpg');
+            break;
+          case 'ElPais':
+            // eslint-disable-next-line global-require
+            this.sourceImage = require('../assets/pais.jpg');
+            break;
+          case 'Avantio':
+            // eslint-disable-next-line global-require
+            this.sourceImage = require('../assets/avantio.jpg');
+            break;
+          default:
+            break;
         }
+      },
+      formatDate() {
+        const date = new Date(this.article.created_at);
+        this.article.created_at = date.toDateString();
+      },
+      closeDialog() {
+        this.dialog = false;
+        this.getArticle();
+      },
     },
-  mounted() 
-  {
+  mounted() {
     this.getArticle();
   },
 };

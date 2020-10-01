@@ -50,8 +50,8 @@
 <script>
 export default {
   name: 'newCard',
-  props:[
-    "article"
+  props: [
+    'article',
   ],
   data() {
     return {
@@ -65,7 +65,7 @@ export default {
     },
   },
   mounted() {
-    let date = new Date(this.article.created_at);
+    const date = new Date(this.article.created_at);
     this.article.created_at = date.toDateString();
   },
   methods: {

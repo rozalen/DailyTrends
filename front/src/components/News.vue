@@ -60,32 +60,31 @@
 </template>
 
 <script>
-import newCard from './newCard'
+import newCard from './newCard.vue';
 
 export default {
   name: 'News',
   props: ['news'],
   data: () => ({
-    elMundoNews:[],
-    elPaisNews:[],
-    avantioNews:[],
+    elMundoNews: [],
+    elPaisNews: [],
+    avantioNews: [],
   }),
   components: {
     newCard,
   },
-  methods: 
+  methods:
   {
-    setNews()
-    {
-      this.elMundoNews = this.news.filter(article => article.source == "ElMundo");
-      this.elPaisNews = this.news.filter(article => article.source == "ElPais");
-      this.avantioNews = this.news.filter(article => article.source == "Avantio");
-    }
+    setNews() {
+      this.elMundoNews = this.news.filter((article) => article.source === 'ElMundo');
+      this.elPaisNews = this.news.filter((article) => article.source === 'ElPais');
+      this.avantioNews = this.news.filter((article) => article.source === 'Avantio');
+    },
   },
   watch: {
     news: [{
-        handler: 'setNews',
+      handler: 'setNews',
     }],
-  }
-}
+  },
+};
 </script>
