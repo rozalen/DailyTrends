@@ -92,6 +92,7 @@
                 <v-btn
                     block
                     dark
+                    color="#33393f"
                     @click="removeArticle"
                 >
                     <v-icon>mdi-delete</v-icon>

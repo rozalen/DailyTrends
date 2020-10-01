@@ -16,7 +16,7 @@
           height="100"
         />
         <newCard
-          v-for = "article in elMundoNews"
+          v-for = "article in elPaisNews"
           :key = "article.id"
           :article = "article"
           class="mt-3"
@@ -32,7 +32,7 @@
           height="100"
         />
         <newCard
-          v-for = "article in elPaisNews"
+          v-for = "article in elMundoNews"
           :key = "article.id"
           :article = "article"
           class="mt-3"
