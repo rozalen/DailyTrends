@@ -4,7 +4,7 @@
     :title = "article.title"
   >
     <v-img
-      :src="(article.image != '' ? article.image : require('../assets/defaultNewImage.jpg'))"
+      :src="(article.image ? article.image : require('../assets/defaultNewImage.jpg'))"
       height="200px"
     ></v-img>
 

@@ -12,7 +12,8 @@ export default {
       .then((res) => res.data);
   },
   createArticle(params) {
-    return axios.post(ARTICLE_ROUTE, params);
+    return axios.post(`${ARTICLE_ROUTE}`, params)
+      .then((res) => res.data);
   },
   removeArticle(id) {
     return axios.delete(`${ARTICLE_ROUTE}/${id}`);

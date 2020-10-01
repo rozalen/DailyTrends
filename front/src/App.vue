@@ -17,13 +17,21 @@
       </div>
 
       <v-spacer></v-spacer>
-
-      <v-btn
-        text
-      >
-        <span class="mr-2">Managing news</span>
-        <v-icon>mdi-newspaper</v-icon>
-      </v-btn>
+      <v-dialog v-model="dialog"  max-width="600px">
+          <template v-slot:activator="{ on, attrs }">
+              <v-btn
+                text
+                v-bind="attrs"
+                v-on="on"
+              >
+                <span class="mr-2">Create new</span>
+                <v-icon>mdi-newspaper</v-icon>
+              </v-btn>
+          </template>
+          <createArticle
+            @closeDialog = "closeDialog"
+          ></createArticle>
+      </v-dialog>
     </v-app-bar>
 
     <v-main class="mb-15">
@@ -54,14 +62,24 @@
 </template>
 
 <script>
+import createArticle from './components/createArticle.vue';
+
 export default {
   name: 'App',
-
   components: {
+    createArticle,
   },
-
-  data: () => ({
-  }),
+  data() {
+    return {
+      dialog: false,
+    };
+  },
+  methods: {
+    closeDialog($event) {
+      this.dialog = false;
+      this.$router.push({ name: 'Article', params: { id: $event.id } });
+    },
+  },
   watch: {
     $route: {
       immediate: true,

@@ -73,7 +73,7 @@ class FeedController extends Controller
             $feed->source = $request->input('source');
             $feed->publisher = $request->input('publisher');
 
-            $msgResponse = self::msgResponse($feed->save(), "Feed Stored!", "Error storing the feed");
+            $msgResponse = self::msgResponse($feed->save(), $feed, "Error storing the feed");
         }
         catch (QueryException $e)
         {

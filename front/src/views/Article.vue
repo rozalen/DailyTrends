@@ -182,6 +182,15 @@ export default {
   mounted() {
     this.getArticle();
   },
+  watch: {
+    $route: {
+      handler(to, from) {
+        if (to.params.id !== from.params.id) {
+          this.getArticle();
+        }
+      },
+    },
+  },
 };
 </script>
 
