@@ -12,3 +12,6 @@ api/storage/*.key
 api/.env
 api/.phpunit.result.cache
 api/composer.lock
+
+#db ignored
+db/
