@@ -61,39 +61,52 @@ class ScrapingController extends Controller
         $response = array();
        
         $articleUrls = $this->getArticleUrls($url, $articlesSelector, $articlesCount);
-
+        
         foreach ($articleUrls as $url)
         {
-            $crawler = $this->getCrawler($url);
-
-            $title = $crawler->filter($params['titleSelector'])->first()->text();
-            $body = $crawler->filter($params['bodySelector'])->first()->text();
-
-            $image = $crawler->filter($params['imageSelector'])->each(function ($field) 
+            if(!empty($url))
             {
-                return $field->attr("src");
-            });
-            
-            $publisher = $crawler->filter($params['publisherSelector'])->each(function ($field) 
-            {
-                return $field->text();
-            });
+                $crawler = $this->getCrawler($url);
 
-            $source = $params['source'];
-            
-            $existsFeed = Feed::where('title', $title)->first();
-            if(!$existsFeed)
-            {
-                $feed = new Feed();
-                $feed->title = $title;
-                $feed->body = $body;
-                $feed->image = (empty($image)) ? '' : $image[0];
-                $feed->publisher = (empty($publisher)) ? $source : $publisher[0];
-                $feed->source = $source;
+                $title = $crawler->filter($params['titleSelector'])->each(function ($field) 
+                {
+                    return $field->text();
+                });
+    
+                $body = $crawler->filter($params['bodySelector'])->each(function ($field) 
+                {
+                    return $field->text();
+                });
+    
+                $image = $crawler->filter($params['imageSelector'])->each(function ($field) 
+                {
+                    return $field->attr("src");
+                });
                 
-                if($feed->save())
-                    array_push($response, $feed);
-            }
+                $publisher = $crawler->filter($params['publisherSelector'])->each(function ($field) 
+                {
+                    return $field->text();
+                });
+    
+                $source = $params['source'];
+                
+                if(!empty($title[0]))
+                {
+                    $existsFeed = Feed::where('title', $title[0])->first();
+                    if(!$existsFeed)
+                    {
+                        $feed = new Feed();
+                        $feed->title = $title[0];
+                        $feed->body = (empty($body)) ? '' : $body[0];
+                        $feed->image = (empty($image)) ? '' : $image[0];
+                        $feed->publisher = (empty($publisher)) ? $source : $publisher[0];
+                        $feed->source = $source;
+                        
+                        if($feed->save())
+                            array_push($response, $feed);
+                    }
+                }
+            }          
         }
 
         return $response;
